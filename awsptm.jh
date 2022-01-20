@@ -1,0 +1,151 @@
+enum Priority {
+  P1_HIGH (High),
+  P2_MEDIUM (Medium),
+  P3_LOW (Low)
+}
+
+entity Inspection {
+    priority Priority
+    created ZonedDateTime
+    occupiersName String
+    occupiersHomePhone String
+    occupiersWorkPhone String
+    occupiersMobilePhone String
+    work TextBlob
+    accessInstructions TextBlob
+    updated ZonedDateTime
+    start LocalDate /** when Jobs should start being scheduled from */
+    frequency Duration /** when period between inspections */
+}
+entity Job {
+    priority Priority
+    created ZonedDateTime
+    occupiersName String
+    occupiersHomePhone String
+    occupiersWorkPhone String
+    occupiersMobilePhone String
+    clientOrderId String
+	assignedAt ZonedDateTime
+    scheduled ZonedDateTime
+    completed ZonedDateTime
+    invoiceNumber String
+    fault TextBlob
+    accessInstructions TextBlob
+    updated ZonedDateTime
+}
+entity Visit {
+	arrived ZonedDateTime
+    departed ZonedDateTime
+    description TextBlob
+    actions TextBlob
+    labour BigDecimal
+}
+entity Certificate {
+	name String
+    image ImageBlob
+}
+entity Evidence {
+	name String
+    url String
+    image ImageBlob
+}
+entity Material {
+	name String
+    description TextBlob
+    quantity Integer
+    unitCost BigDecimal
+}
+
+
+/** 
+A proxy object to the User object created by JHipster
+to allow associations to it.
+*/
+entity ClientUser {
+	landline String
+    mobile String
+}
+/** 
+Allows groups of users to be defined by organisation.
+*/
+entity ClientOrganisation {
+	name String
+	domain String
+}
+/** 
+Engineers will be assigned to Jobs
+*/
+entity Engineer {
+	firstname String
+    lastname String
+    email String
+}
+
+
+/**
+This represents how an address will be respresented internally.
+It will normally be created based upon the response from Google address lookup
+*/
+entity Address {
+    postcode String
+    number String
+	position String
+    addressLine1 String
+    addressLine2 String
+    town String
+    county String
+}
+/**
+The response from Google
+*/
+entity GoogleAddress {
+    position String
+    url String
+    html String
+    formatted String
+    types String
+}
+/**
+The response from Google is made of individual components. 
+This describes the value of that component.
+*/
+entity AddressComponent {
+	longName String
+    shortName String
+}
+/**
+The response from Google is made of individual components. 
+This describes the type of that component.
+*/
+entity AddressType {
+	name String
+	position Integer
+}
+
+
+relationship OneToOne {
+    ClientUser{user} to User{clientUser}
+    Engineer{user} to User{engineer}
+    Address to GoogleAddress with jpaDerivedIdentifier
+}
+
+relationship OneToMany {
+    Job{inspection} to Inspection{jobs}
+	ClientOrganisation{clientUsers} to ClientUser{client}
+    Job{visits} to Visit{job}
+    Visit{materials} to Material{visit}
+    Visit{certificates} to Certificate{visit}
+    Visit{evidences} to Evidence{visit}
+    ClientUser{jobs} to Job{createdBy}
+    ClientUser{inspections} to Inspection{createdBy}
+    Engineer{jobs} to Job{assignedTo}
+    Address{jobs} to Job{address}
+    Address{inspections} to Inspection{address}
+    GoogleAddress{addressComponents} to AddressComponent{address}
+    AddressType{addressComponents} to AddressComponent{type}
+}
+
+filter all
+dto all with mapstruct
+paginate all with pagination
+service all with serviceClass
