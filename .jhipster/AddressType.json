@@ -1,0 +1,32 @@
+{
+  "name": "AddressType",
+  "fields": [
+    {
+      "fieldName": "name",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "position",
+      "fieldType": "Integer"
+    }
+  ],
+  "relationships": [
+    {
+      "relationshipType": "one-to-many",
+      "otherEntityName": "addressComponent",
+      "otherEntityRelationshipName": "type",
+      "relationshipName": "addressComponents"
+    }
+  ],
+  "javadoc": "The response from Google is made of individual components.\\nThis describes the type of that component.",
+  "entityTableName": "address_type",
+  "dto": "mapstruct",
+  "pagination": "pagination",
+  "service": "serviceClass",
+  "jpaMetamodelFiltering": true,
+  "fluentMethods": true,
+  "readOnly": false,
+  "embedded": false,
+  "applications": "*",
+  "changelogDate": "20220120151810"
+}

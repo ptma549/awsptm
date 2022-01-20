@@ -1,0 +1,134 @@
+<div>
+  <h2 id="page-heading" data-cy="InspectionHeading">
+    <span>Inspections</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info mr-2" (click)="loadPage()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span>Refresh List</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-inspection"
+        [routerLink]="['/inspection/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span> Create a new Inspection </span>
+      </button>
+    </div>
+  </h2>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  <div class="alert alert-warning" id="no-result" *ngIf="inspections?.length === 0">
+    <span>No inspections found</span>
+  </div>
+
+  <div class="table-responsive" id="entities" *ngIf="inspections && inspections.length > 0">
+    <table class="table table-striped" aria-describedby="page-heading">
+      <thead>
+        <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="loadPage()">
+          <th scope="col" jhiSortBy="id"><span>ID</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="priority"><span>Priority</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="created"><span>Created</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="occupiersName"><span>Occupiers Name</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="occupiersHomePhone"><span>Occupiers Home Phone</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="occupiersWorkPhone"><span>Occupiers Work Phone</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="occupiersMobilePhone"><span>Occupiers Mobile Phone</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="work"><span>Work</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="accessInstructions"><span>Access Instructions</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="updated"><span>Updated</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="start"><span>Start</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="frequency"><span>Frequency</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="jobs.id"><span>Jobs</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="createdBy.id"><span>Created By</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="address.id"><span>Address</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let inspection of inspections; trackBy: trackId" data-cy="entityTable">
+          <td>
+            <a [routerLink]="['/inspection', inspection.id, 'view']">{{ inspection.id }}</a>
+          </td>
+          <td>{{ inspection.priority }}</td>
+          <td>{{ inspection.created | formatMediumDatetime }}</td>
+          <td>{{ inspection.occupiersName }}</td>
+          <td>{{ inspection.occupiersHomePhone }}</td>
+          <td>{{ inspection.occupiersWorkPhone }}</td>
+          <td>{{ inspection.occupiersMobilePhone }}</td>
+          <td>{{ inspection.work }}</td>
+          <td>{{ inspection.accessInstructions }}</td>
+          <td>{{ inspection.updated | formatMediumDatetime }}</td>
+          <td>{{ inspection.start | formatMediumDate }}</td>
+          <td title="{{ inspection.frequency }}">{{ inspection.frequency | duration }}</td>
+          <td>
+            <div *ngIf="inspection.jobs">
+              <a [routerLink]="['/job', inspection.jobs?.id, 'view']">{{ inspection.jobs?.id }}</a>
+            </div>
+          </td>
+          <td>
+            <div *ngIf="inspection.createdBy">
+              <a [routerLink]="['/client-user', inspection.createdBy?.id, 'view']">{{ inspection.createdBy?.id }}</a>
+            </div>
+          </td>
+          <td>
+            <div *ngIf="inspection.address">
+              <a [routerLink]="['/address', inspection.address?.id, 'view']">{{ inspection.address?.id }}</a>
+            </div>
+          </td>
+          <td class="text-right">
+            <div class="btn-group">
+              <button
+                type="submit"
+                [routerLink]="['/inspection', inspection.id, 'view']"
+                class="btn btn-info btn-sm"
+                data-cy="entityDetailsButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span class="d-none d-md-inline">View</span>
+              </button>
+
+              <button
+                type="submit"
+                [routerLink]="['/inspection', inspection.id, 'edit']"
+                class="btn btn-primary btn-sm"
+                data-cy="entityEditButton"
+              >
+                <fa-icon icon="pencil-alt"></fa-icon>
+                <span class="d-none d-md-inline">Edit</span>
+              </button>
+
+              <button type="submit" (click)="delete(inspection)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                <fa-icon icon="times"></fa-icon>
+                <span class="d-none d-md-inline">Delete</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div *ngIf="inspections && inspections.length > 0">
+    <div class="row justify-content-center">
+      <jhi-item-count [params]="{ page: page, totalItems: totalItems, itemsPerPage: itemsPerPage }"></jhi-item-count>
+    </div>
+
+    <div class="row justify-content-center">
+      <ngb-pagination
+        [collectionSize]="totalItems"
+        [(page)]="ngbPaginationPage"
+        [pageSize]="itemsPerPage"
+        [maxSize]="5"
+        [rotate]="true"
+        [boundaryLinks]="true"
+        (pageChange)="loadPage($event)"
+      ></ngb-pagination>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,90 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <div *ngIf="inspection">
+      <h2 data-cy="inspectionDetailsHeading"><span>Inspection</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span>ID</span></dt>
+        <dd>
+          <span>{{ inspection.id }}</span>
+        </dd>
+        <dt><span>Priority</span></dt>
+        <dd>
+          <span>{{ inspection.priority }}</span>
+        </dd>
+        <dt><span>Created</span></dt>
+        <dd>
+          <span>{{ inspection.created | formatMediumDatetime }}</span>
+        </dd>
+        <dt><span>Occupiers Name</span></dt>
+        <dd>
+          <span>{{ inspection.occupiersName }}</span>
+        </dd>
+        <dt><span>Occupiers Home Phone</span></dt>
+        <dd>
+          <span>{{ inspection.occupiersHomePhone }}</span>
+        </dd>
+        <dt><span>Occupiers Work Phone</span></dt>
+        <dd>
+          <span>{{ inspection.occupiersWorkPhone }}</span>
+        </dd>
+        <dt><span>Occupiers Mobile Phone</span></dt>
+        <dd>
+          <span>{{ inspection.occupiersMobilePhone }}</span>
+        </dd>
+        <dt><span>Work</span></dt>
+        <dd>
+          <span>{{ inspection.work }}</span>
+        </dd>
+        <dt><span>Access Instructions</span></dt>
+        <dd>
+          <span>{{ inspection.accessInstructions }}</span>
+        </dd>
+        <dt><span>Updated</span></dt>
+        <dd>
+          <span>{{ inspection.updated | formatMediumDatetime }}</span>
+        </dd>
+        <dt><span ngbTooltip="when Jobs should start being scheduled from">Start</span></dt>
+        <dd>
+          <span>{{ inspection.start | formatMediumDate }}</span>
+        </dd>
+        <dt><span ngbTooltip="when period between inspections">Frequency</span></dt>
+        <dd>
+          <span>{{ inspection.frequency | duration }} ({{ inspection.frequency }})</span>
+        </dd>
+        <dt><span>Jobs</span></dt>
+        <dd>
+          <div *ngIf="inspection.jobs">
+            <a [routerLink]="['/job', inspection.jobs?.id, 'view']">{{ inspection.jobs?.id }}</a>
+          </div>
+        </dd>
+        <dt><span>Created By</span></dt>
+        <dd>
+          <div *ngIf="inspection.createdBy">
+            <a [routerLink]="['/client-user', inspection.createdBy?.id, 'view']">{{ inspection.createdBy?.id }}</a>
+          </div>
+        </dd>
+        <dt><span>Address</span></dt>
+        <dd>
+          <div *ngIf="inspection.address">
+            <a [routerLink]="['/address', inspection.address?.id, 'view']">{{ inspection.address?.id }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span>Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/inspection', inspection.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span>Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

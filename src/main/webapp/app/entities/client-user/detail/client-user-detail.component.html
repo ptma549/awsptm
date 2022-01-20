@@ -1,0 +1,46 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <div *ngIf="clientUser">
+      <h2 data-cy="clientUserDetailsHeading"><span>Client User</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span>ID</span></dt>
+        <dd>
+          <span>{{ clientUser.id }}</span>
+        </dd>
+        <dt><span>Landline</span></dt>
+        <dd>
+          <span>{{ clientUser.landline }}</span>
+        </dd>
+        <dt><span>Mobile</span></dt>
+        <dd>
+          <span>{{ clientUser.mobile }}</span>
+        </dd>
+        <dt><span>User</span></dt>
+        <dd>
+          <span>{{ clientUser.user?.id }}</span>
+        </dd>
+        <dt><span>Client</span></dt>
+        <dd>
+          <div *ngIf="clientUser.client">
+            <a [routerLink]="['/client-organisation', clientUser.client?.id, 'view']">{{ clientUser.client?.id }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span>Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/client-user', clientUser.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span>Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

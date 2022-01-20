@@ -42,7 +42,23 @@
     "clientTheme": "none",
     "clientThemeVariant": "",
     "reactive": false,
-    "enableGradleEnterprise": false
+    "enableGradleEnterprise": false,
+    "entities": [
+      "Inspection",
+      "Job",
+      "Visit",
+      "Certificate",
+      "Evidence",
+      "Material",
+      "ClientUser",
+      "ClientOrganisation",
+      "Engineer",
+      "Address",
+      "GoogleAddress",
+      "AddressComponent",
+      "AddressType"
+    ],
+    "lastLiquibaseTimestamp": 1642691890000
   },
   "git-provider": "GitHub",
   "git-company": "ptma549",

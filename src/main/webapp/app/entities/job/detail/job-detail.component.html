@@ -1,0 +1,102 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <div *ngIf="job">
+      <h2 data-cy="jobDetailsHeading"><span>Job</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span>ID</span></dt>
+        <dd>
+          <span>{{ job.id }}</span>
+        </dd>
+        <dt><span>Priority</span></dt>
+        <dd>
+          <span>{{ job.priority }}</span>
+        </dd>
+        <dt><span>Created</span></dt>
+        <dd>
+          <span>{{ job.created | formatMediumDatetime }}</span>
+        </dd>
+        <dt><span>Occupiers Name</span></dt>
+        <dd>
+          <span>{{ job.occupiersName }}</span>
+        </dd>
+        <dt><span>Occupiers Home Phone</span></dt>
+        <dd>
+          <span>{{ job.occupiersHomePhone }}</span>
+        </dd>
+        <dt><span>Occupiers Work Phone</span></dt>
+        <dd>
+          <span>{{ job.occupiersWorkPhone }}</span>
+        </dd>
+        <dt><span>Occupiers Mobile Phone</span></dt>
+        <dd>
+          <span>{{ job.occupiersMobilePhone }}</span>
+        </dd>
+        <dt><span>Client Order Id</span></dt>
+        <dd>
+          <span>{{ job.clientOrderId }}</span>
+        </dd>
+        <dt><span>Assigned At</span></dt>
+        <dd>
+          <span>{{ job.assignedAt | formatMediumDatetime }}</span>
+        </dd>
+        <dt><span>Scheduled</span></dt>
+        <dd>
+          <span>{{ job.scheduled | formatMediumDatetime }}</span>
+        </dd>
+        <dt><span>Completed</span></dt>
+        <dd>
+          <span>{{ job.completed | formatMediumDatetime }}</span>
+        </dd>
+        <dt><span>Invoice Number</span></dt>
+        <dd>
+          <span>{{ job.invoiceNumber }}</span>
+        </dd>
+        <dt><span>Fault</span></dt>
+        <dd>
+          <span>{{ job.fault }}</span>
+        </dd>
+        <dt><span>Access Instructions</span></dt>
+        <dd>
+          <span>{{ job.accessInstructions }}</span>
+        </dd>
+        <dt><span>Updated</span></dt>
+        <dd>
+          <span>{{ job.updated | formatMediumDatetime }}</span>
+        </dd>
+        <dt><span>Created By</span></dt>
+        <dd>
+          <div *ngIf="job.createdBy">
+            <a [routerLink]="['/client-user', job.createdBy?.id, 'view']">{{ job.createdBy?.id }}</a>
+          </div>
+        </dd>
+        <dt><span>Assigned To</span></dt>
+        <dd>
+          <div *ngIf="job.assignedTo">
+            <a [routerLink]="['/engineer', job.assignedTo?.id, 'view']">{{ job.assignedTo?.id }}</a>
+          </div>
+        </dd>
+        <dt><span>Address</span></dt>
+        <dd>
+          <div *ngIf="job.address">
+            <a [routerLink]="['/address', job.address?.id, 'view']">{{ job.address?.id }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span>Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/job', job.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span>Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

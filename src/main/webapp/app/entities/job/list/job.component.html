@@ -1,0 +1,130 @@
+<div>
+  <h2 id="page-heading" data-cy="JobHeading">
+    <span>Jobs</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info mr-2" (click)="loadPage()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span>Refresh List</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-job"
+        [routerLink]="['/job/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span> Create a new Job </span>
+      </button>
+    </div>
+  </h2>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  <div class="alert alert-warning" id="no-result" *ngIf="jobs?.length === 0">
+    <span>No jobs found</span>
+  </div>
+
+  <div class="table-responsive" id="entities" *ngIf="jobs && jobs.length > 0">
+    <table class="table table-striped" aria-describedby="page-heading">
+      <thead>
+        <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="loadPage()">
+          <th scope="col" jhiSortBy="id"><span>ID</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="priority"><span>Priority</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="created"><span>Created</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="occupiersName"><span>Occupiers Name</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="occupiersHomePhone"><span>Occupiers Home Phone</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="occupiersWorkPhone"><span>Occupiers Work Phone</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="occupiersMobilePhone"><span>Occupiers Mobile Phone</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="clientOrderId"><span>Client Order Id</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="assignedAt"><span>Assigned At</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="scheduled"><span>Scheduled</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="completed"><span>Completed</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="invoiceNumber"><span>Invoice Number</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="fault"><span>Fault</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="accessInstructions"><span>Access Instructions</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="updated"><span>Updated</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="createdBy.id"><span>Created By</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="assignedTo.id"><span>Assigned To</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="address.id"><span>Address</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let job of jobs; trackBy: trackId" data-cy="entityTable">
+          <td>
+            <a [routerLink]="['/job', job.id, 'view']">{{ job.id }}</a>
+          </td>
+          <td>{{ job.priority }}</td>
+          <td>{{ job.created | formatMediumDatetime }}</td>
+          <td>{{ job.occupiersName }}</td>
+          <td>{{ job.occupiersHomePhone }}</td>
+          <td>{{ job.occupiersWorkPhone }}</td>
+          <td>{{ job.occupiersMobilePhone }}</td>
+          <td>{{ job.clientOrderId }}</td>
+          <td>{{ job.assignedAt | formatMediumDatetime }}</td>
+          <td>{{ job.scheduled | formatMediumDatetime }}</td>
+          <td>{{ job.completed | formatMediumDatetime }}</td>
+          <td>{{ job.invoiceNumber }}</td>
+          <td>{{ job.fault }}</td>
+          <td>{{ job.accessInstructions }}</td>
+          <td>{{ job.updated | formatMediumDatetime }}</td>
+          <td>
+            <div *ngIf="job.createdBy">
+              <a [routerLink]="['/client-user', job.createdBy?.id, 'view']">{{ job.createdBy?.id }}</a>
+            </div>
+          </td>
+          <td>
+            <div *ngIf="job.assignedTo">
+              <a [routerLink]="['/engineer', job.assignedTo?.id, 'view']">{{ job.assignedTo?.id }}</a>
+            </div>
+          </td>
+          <td>
+            <div *ngIf="job.address">
+              <a [routerLink]="['/address', job.address?.id, 'view']">{{ job.address?.id }}</a>
+            </div>
+          </td>
+          <td class="text-right">
+            <div class="btn-group">
+              <button type="submit" [routerLink]="['/job', job.id, 'view']" class="btn btn-info btn-sm" data-cy="entityDetailsButton">
+                <fa-icon icon="eye"></fa-icon>
+                <span class="d-none d-md-inline">View</span>
+              </button>
+
+              <button type="submit" [routerLink]="['/job', job.id, 'edit']" class="btn btn-primary btn-sm" data-cy="entityEditButton">
+                <fa-icon icon="pencil-alt"></fa-icon>
+                <span class="d-none d-md-inline">Edit</span>
+              </button>
+
+              <button type="submit" (click)="delete(job)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                <fa-icon icon="times"></fa-icon>
+                <span class="d-none d-md-inline">Delete</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div *ngIf="jobs && jobs.length > 0">
+    <div class="row justify-content-center">
+      <jhi-item-count [params]="{ page: page, totalItems: totalItems, itemsPerPage: itemsPerPage }"></jhi-item-count>
+    </div>
+
+    <div class="row justify-content-center">
+      <ngb-pagination
+        [collectionSize]="totalItems"
+        [(page)]="ngbPaginationPage"
+        [pageSize]="itemsPerPage"
+        [maxSize]="5"
+        [rotate]="true"
+        [boundaryLinks]="true"
+        (pageChange)="loadPage($event)"
+      ></ngb-pagination>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,54 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <div *ngIf="visit">
+      <h2 data-cy="visitDetailsHeading"><span>Visit</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span>ID</span></dt>
+        <dd>
+          <span>{{ visit.id }}</span>
+        </dd>
+        <dt><span>Arrived</span></dt>
+        <dd>
+          <span>{{ visit.arrived | formatMediumDatetime }}</span>
+        </dd>
+        <dt><span>Departed</span></dt>
+        <dd>
+          <span>{{ visit.departed | formatMediumDatetime }}</span>
+        </dd>
+        <dt><span>Description</span></dt>
+        <dd>
+          <span>{{ visit.description }}</span>
+        </dd>
+        <dt><span>Actions</span></dt>
+        <dd>
+          <span>{{ visit.actions }}</span>
+        </dd>
+        <dt><span>Labour</span></dt>
+        <dd>
+          <span>{{ visit.labour }}</span>
+        </dd>
+        <dt><span>Job</span></dt>
+        <dd>
+          <div *ngIf="visit.job">
+            <a [routerLink]="['/job', visit.job?.id, 'view']">{{ visit.job?.id }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span>Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/visit', visit.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span>Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,38 @@
+{
+  "name": "AddressComponent",
+  "fields": [
+    {
+      "fieldName": "longName",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "shortName",
+      "fieldType": "String"
+    }
+  ],
+  "relationships": [
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "googleAddress",
+      "otherEntityRelationshipName": "addressComponents",
+      "relationshipName": "address"
+    },
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "addressType",
+      "otherEntityRelationshipName": "addressComponents",
+      "relationshipName": "type"
+    }
+  ],
+  "javadoc": "The response from Google is made of individual components.\\nThis describes the value of that component.",
+  "entityTableName": "address_component",
+  "dto": "mapstruct",
+  "pagination": "pagination",
+  "service": "serviceClass",
+  "jpaMetamodelFiltering": true,
+  "fluentMethods": true,
+  "readOnly": false,
+  "embedded": false,
+  "applications": "*",
+  "changelogDate": "20220120151809"
+}
