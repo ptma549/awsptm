@@ -1,0 +1,110 @@
+<div>
+  <h2 id="page-heading" data-cy="AddressComponentHeading">
+    <span>Address Components</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info mr-2" (click)="loadPage()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span>Refresh List</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-address-component"
+        [routerLink]="['/address-component/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span> Create a new Address Component </span>
+      </button>
+    </div>
+  </h2>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  <div class="alert alert-warning" id="no-result" *ngIf="addressComponents?.length === 0">
+    <span>No addressComponents found</span>
+  </div>
+
+  <div class="table-responsive" id="entities" *ngIf="addressComponents && addressComponents.length > 0">
+    <table class="table table-striped" aria-describedby="page-heading">
+      <thead>
+        <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="loadPage()">
+          <th scope="col" jhiSortBy="id"><span>ID</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="longName"><span>Long Name</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="shortName"><span>Short Name</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="address.id"><span>Address</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="type.id"><span>Type</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let addressComponent of addressComponents; trackBy: trackId" data-cy="entityTable">
+          <td>
+            <a [routerLink]="['/address-component', addressComponent.id, 'view']">{{ addressComponent.id }}</a>
+          </td>
+          <td>{{ addressComponent.longName }}</td>
+          <td>{{ addressComponent.shortName }}</td>
+          <td>
+            <div *ngIf="addressComponent.address">
+              <a [routerLink]="['/google-address', addressComponent.address?.id, 'view']">{{ addressComponent.address?.id }}</a>
+            </div>
+          </td>
+          <td>
+            <div *ngIf="addressComponent.type">
+              <a [routerLink]="['/address-type', addressComponent.type?.id, 'view']">{{ addressComponent.type?.id }}</a>
+            </div>
+          </td>
+          <td class="text-right">
+            <div class="btn-group">
+              <button
+                type="submit"
+                [routerLink]="['/address-component', addressComponent.id, 'view']"
+                class="btn btn-info btn-sm"
+                data-cy="entityDetailsButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span class="d-none d-md-inline">View</span>
+              </button>
+
+              <button
+                type="submit"
+                [routerLink]="['/address-component', addressComponent.id, 'edit']"
+                class="btn btn-primary btn-sm"
+                data-cy="entityEditButton"
+              >
+                <fa-icon icon="pencil-alt"></fa-icon>
+                <span class="d-none d-md-inline">Edit</span>
+              </button>
+
+              <button type="submit" (click)="delete(addressComponent)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                <fa-icon icon="times"></fa-icon>
+                <span class="d-none d-md-inline">Delete</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div *ngIf="addressComponents && addressComponents.length > 0">
+    <div class="row justify-content-center">
+      <jhi-item-count [params]="{ page: page, totalItems: totalItems, itemsPerPage: itemsPerPage }"></jhi-item-count>
+    </div>
+
+    <div class="row justify-content-center">
+      <ngb-pagination
+        [collectionSize]="totalItems"
+        [(page)]="ngbPaginationPage"
+        [pageSize]="itemsPerPage"
+        [maxSize]="5"
+        [rotate]="true"
+        [boundaryLinks]="true"
+        (pageChange)="loadPage($event)"
+      ></ngb-pagination>
+    </div>
+  </div>
+</div>

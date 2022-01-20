@@ -1,0 +1,11 @@
+id;arrived;departed;description;actions;labour
+1;2022-01-20T14:50:50;2022-01-19T18:43:46;../fake-data/blob/hipster.txt;../fake-data/blob/hipster.txt;33953
+2;2022-01-20T11:59:21;2022-01-20T12:39:57;../fake-data/blob/hipster.txt;../fake-data/blob/hipster.txt;21843
+3;2022-01-20T02:56:46;2022-01-19T16:08:17;../fake-data/blob/hipster.txt;../fake-data/blob/hipster.txt;76447
+4;2022-01-19T17:19:15;2022-01-20T05:29:37;../fake-data/blob/hipster.txt;../fake-data/blob/hipster.txt;71634
+5;2022-01-20T01:57:06;2022-01-19T16:31:58;../fake-data/blob/hipster.txt;../fake-data/blob/hipster.txt;25802
+6;2022-01-20T10:14:19;2022-01-19T23:20:29;../fake-data/blob/hipster.txt;../fake-data/blob/hipster.txt;15012
+7;2022-01-20T00:05:51;2022-01-20T03:34:42;../fake-data/blob/hipster.txt;../fake-data/blob/hipster.txt;86149
+8;2022-01-19T21:45:39;2022-01-19T16:41:47;../fake-data/blob/hipster.txt;../fake-data/blob/hipster.txt;16927
+9;2022-01-20T07:55:06;2022-01-20T05:12:13;../fake-data/blob/hipster.txt;../fake-data/blob/hipster.txt;90813
+10;2022-01-20T13:26:54;2022-01-19T16:38:54;../fake-data/blob/hipster.txt;../fake-data/blob/hipster.txt;72036

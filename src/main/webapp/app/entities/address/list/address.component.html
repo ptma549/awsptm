@@ -1,0 +1,114 @@
+<div>
+  <h2 id="page-heading" data-cy="AddressHeading">
+    <span>Addresses</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info mr-2" (click)="loadPage()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span>Refresh List</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-address"
+        [routerLink]="['/address/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span> Create a new Address </span>
+      </button>
+    </div>
+  </h2>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  <div class="alert alert-warning" id="no-result" *ngIf="addresses?.length === 0">
+    <span>No addresses found</span>
+  </div>
+
+  <div class="table-responsive" id="entities" *ngIf="addresses && addresses.length > 0">
+    <table class="table table-striped" aria-describedby="page-heading">
+      <thead>
+        <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="loadPage()">
+          <th scope="col" jhiSortBy="id"><span>ID</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="postcode"><span>Postcode</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="number"><span>Number</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="position"><span>Position</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="addressLine1"><span>Address Line 1</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="addressLine2"><span>Address Line 2</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="town"><span>Town</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="county"><span>County</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="googleAddress.id"><span>Google Address</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let address of addresses; trackBy: trackId" data-cy="entityTable">
+          <td>
+            <a [routerLink]="['/address', address.id, 'view']">{{ address.id }}</a>
+          </td>
+          <td>{{ address.postcode }}</td>
+          <td>{{ address.number }}</td>
+          <td>{{ address.position }}</td>
+          <td>{{ address.addressLine1 }}</td>
+          <td>{{ address.addressLine2 }}</td>
+          <td>{{ address.town }}</td>
+          <td>{{ address.county }}</td>
+          <td>
+            <div *ngIf="address.googleAddress">
+              <a [routerLink]="['/google-address', address.googleAddress?.id, 'view']">{{ address.googleAddress?.id }}</a>
+            </div>
+          </td>
+          <td class="text-right">
+            <div class="btn-group">
+              <button
+                type="submit"
+                [routerLink]="['/address', address.id, 'view']"
+                class="btn btn-info btn-sm"
+                data-cy="entityDetailsButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span class="d-none d-md-inline">View</span>
+              </button>
+
+              <button
+                type="submit"
+                [routerLink]="['/address', address.id, 'edit']"
+                class="btn btn-primary btn-sm"
+                data-cy="entityEditButton"
+              >
+                <fa-icon icon="pencil-alt"></fa-icon>
+                <span class="d-none d-md-inline">Edit</span>
+              </button>
+
+              <button type="submit" (click)="delete(address)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                <fa-icon icon="times"></fa-icon>
+                <span class="d-none d-md-inline">Delete</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div *ngIf="addresses && addresses.length > 0">
+    <div class="row justify-content-center">
+      <jhi-item-count [params]="{ page: page, totalItems: totalItems, itemsPerPage: itemsPerPage }"></jhi-item-count>
+    </div>
+
+    <div class="row justify-content-center">
+      <ngb-pagination
+        [collectionSize]="totalItems"
+        [(page)]="ngbPaginationPage"
+        [pageSize]="itemsPerPage"
+        [maxSize]="5"
+        [rotate]="true"
+        [boundaryLinks]="true"
+        (pageChange)="loadPage($event)"
+      ></ngb-pagination>
+    </div>
+  </div>
+</div>

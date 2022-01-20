@@ -1,0 +1,100 @@
+<div>
+  <h2 id="page-heading" data-cy="VisitHeading">
+    <span>Visits</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info mr-2" (click)="loadPage()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span>Refresh List</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-visit"
+        [routerLink]="['/visit/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span> Create a new Visit </span>
+      </button>
+    </div>
+  </h2>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  <div class="alert alert-warning" id="no-result" *ngIf="visits?.length === 0">
+    <span>No visits found</span>
+  </div>
+
+  <div class="table-responsive" id="entities" *ngIf="visits && visits.length > 0">
+    <table class="table table-striped" aria-describedby="page-heading">
+      <thead>
+        <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="loadPage()">
+          <th scope="col" jhiSortBy="id"><span>ID</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="arrived"><span>Arrived</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="departed"><span>Departed</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="description"><span>Description</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="actions"><span>Actions</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="labour"><span>Labour</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="job.id"><span>Job</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let visit of visits; trackBy: trackId" data-cy="entityTable">
+          <td>
+            <a [routerLink]="['/visit', visit.id, 'view']">{{ visit.id }}</a>
+          </td>
+          <td>{{ visit.arrived | formatMediumDatetime }}</td>
+          <td>{{ visit.departed | formatMediumDatetime }}</td>
+          <td>{{ visit.description }}</td>
+          <td>{{ visit.actions }}</td>
+          <td>{{ visit.labour }}</td>
+          <td>
+            <div *ngIf="visit.job">
+              <a [routerLink]="['/job', visit.job?.id, 'view']">{{ visit.job?.id }}</a>
+            </div>
+          </td>
+          <td class="text-right">
+            <div class="btn-group">
+              <button type="submit" [routerLink]="['/visit', visit.id, 'view']" class="btn btn-info btn-sm" data-cy="entityDetailsButton">
+                <fa-icon icon="eye"></fa-icon>
+                <span class="d-none d-md-inline">View</span>
+              </button>
+
+              <button type="submit" [routerLink]="['/visit', visit.id, 'edit']" class="btn btn-primary btn-sm" data-cy="entityEditButton">
+                <fa-icon icon="pencil-alt"></fa-icon>
+                <span class="d-none d-md-inline">Edit</span>
+              </button>
+
+              <button type="submit" (click)="delete(visit)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                <fa-icon icon="times"></fa-icon>
+                <span class="d-none d-md-inline">Delete</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div *ngIf="visits && visits.length > 0">
+    <div class="row justify-content-center">
+      <jhi-item-count [params]="{ page: page, totalItems: totalItems, itemsPerPage: itemsPerPage }"></jhi-item-count>
+    </div>
+
+    <div class="row justify-content-center">
+      <ngb-pagination
+        [collectionSize]="totalItems"
+        [(page)]="ngbPaginationPage"
+        [pageSize]="itemsPerPage"
+        [maxSize]="5"
+        [rotate]="true"
+        [boundaryLinks]="true"
+        (pageChange)="loadPage($event)"
+      ></ngb-pagination>
+    </div>
+  </div>
+</div>

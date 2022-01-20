@@ -1,0 +1,48 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <div *ngIf="googleAddress">
+      <h2 data-cy="googleAddressDetailsHeading"><span>Google Address</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span>ID</span></dt>
+        <dd>
+          <span>{{ googleAddress.id }}</span>
+        </dd>
+        <dt><span>Position</span></dt>
+        <dd>
+          <span>{{ googleAddress.position }}</span>
+        </dd>
+        <dt><span>Url</span></dt>
+        <dd>
+          <span>{{ googleAddress.url }}</span>
+        </dd>
+        <dt><span>Html</span></dt>
+        <dd>
+          <span>{{ googleAddress.html }}</span>
+        </dd>
+        <dt><span>Formatted</span></dt>
+        <dd>
+          <span>{{ googleAddress.formatted }}</span>
+        </dd>
+        <dt><span>Types</span></dt>
+        <dd>
+          <span>{{ googleAddress.types }}</span>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span>Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/google-address', googleAddress.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span>Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

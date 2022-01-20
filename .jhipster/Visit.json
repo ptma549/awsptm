@@ -1,0 +1,63 @@
+{
+  "name": "Visit",
+  "fields": [
+    {
+      "fieldName": "arrived",
+      "fieldType": "ZonedDateTime"
+    },
+    {
+      "fieldName": "departed",
+      "fieldType": "ZonedDateTime"
+    },
+    {
+      "fieldName": "description",
+      "fieldType": "byte[]",
+      "fieldTypeBlobContent": "text"
+    },
+    {
+      "fieldName": "actions",
+      "fieldType": "byte[]",
+      "fieldTypeBlobContent": "text"
+    },
+    {
+      "fieldName": "labour",
+      "fieldType": "BigDecimal"
+    }
+  ],
+  "relationships": [
+    {
+      "relationshipType": "one-to-many",
+      "otherEntityName": "material",
+      "otherEntityRelationshipName": "visit",
+      "relationshipName": "materials"
+    },
+    {
+      "relationshipType": "one-to-many",
+      "otherEntityName": "certificate",
+      "otherEntityRelationshipName": "visit",
+      "relationshipName": "certificates"
+    },
+    {
+      "relationshipType": "one-to-many",
+      "otherEntityName": "evidence",
+      "otherEntityRelationshipName": "visit",
+      "relationshipName": "evidences"
+    },
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "job",
+      "otherEntityRelationshipName": "visits",
+      "relationshipName": "job"
+    }
+  ],
+  "entityTableName": "visit",
+  "dto": "mapstruct",
+  "pagination": "pagination",
+  "service": "serviceClass",
+  "jpaMetamodelFiltering": true,
+  "fluentMethods": true,
+  "readOnly": false,
+  "embedded": false,
+  "applications": "*",
+  "changelogDate": "20220120151800"
+}

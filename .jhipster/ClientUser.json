@@ -1,0 +1,51 @@
+{
+  "name": "ClientUser",
+  "fields": [
+    {
+      "fieldName": "landline",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "mobile",
+      "fieldType": "String"
+    }
+  ],
+  "relationships": [
+    {
+      "relationshipType": "one-to-one",
+      "otherEntityName": "user",
+      "otherEntityRelationshipName": "clientUser",
+      "relationshipName": "user",
+      "ownerSide": true
+    },
+    {
+      "relationshipType": "one-to-many",
+      "otherEntityName": "job",
+      "otherEntityRelationshipName": "createdBy",
+      "relationshipName": "jobs"
+    },
+    {
+      "relationshipType": "one-to-many",
+      "otherEntityName": "inspection",
+      "otherEntityRelationshipName": "createdBy",
+      "relationshipName": "inspections"
+    },
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "clientOrganisation",
+      "otherEntityRelationshipName": "clientUsers",
+      "relationshipName": "client"
+    }
+  ],
+  "javadoc": "A proxy object to the User object created by JHipster\\nto allow associations to it.",
+  "entityTableName": "client_user",
+  "dto": "mapstruct",
+  "pagination": "pagination",
+  "service": "serviceClass",
+  "jpaMetamodelFiltering": true,
+  "fluentMethods": true,
+  "readOnly": false,
+  "embedded": false,
+  "applications": "*",
+  "changelogDate": "20220120151804"
+}

@@ -1,0 +1,62 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <div *ngIf="address">
+      <h2 data-cy="addressDetailsHeading"><span>Address</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span>ID</span></dt>
+        <dd>
+          <span>{{ address.id }}</span>
+        </dd>
+        <dt><span>Postcode</span></dt>
+        <dd>
+          <span>{{ address.postcode }}</span>
+        </dd>
+        <dt><span>Number</span></dt>
+        <dd>
+          <span>{{ address.number }}</span>
+        </dd>
+        <dt><span>Position</span></dt>
+        <dd>
+          <span>{{ address.position }}</span>
+        </dd>
+        <dt><span>Address Line 1</span></dt>
+        <dd>
+          <span>{{ address.addressLine1 }}</span>
+        </dd>
+        <dt><span>Address Line 2</span></dt>
+        <dd>
+          <span>{{ address.addressLine2 }}</span>
+        </dd>
+        <dt><span>Town</span></dt>
+        <dd>
+          <span>{{ address.town }}</span>
+        </dd>
+        <dt><span>County</span></dt>
+        <dd>
+          <span>{{ address.county }}</span>
+        </dd>
+        <dt><span>Google Address</span></dt>
+        <dd>
+          <div *ngIf="address.googleAddress">
+            <a [routerLink]="['/google-address', address.googleAddress?.id, 'view']">{{ address.googleAddress?.id }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span>Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/address', address.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span>Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

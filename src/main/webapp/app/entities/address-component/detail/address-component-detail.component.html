@@ -1,0 +1,48 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <div *ngIf="addressComponent">
+      <h2 data-cy="addressComponentDetailsHeading"><span>Address Component</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span>ID</span></dt>
+        <dd>
+          <span>{{ addressComponent.id }}</span>
+        </dd>
+        <dt><span>Long Name</span></dt>
+        <dd>
+          <span>{{ addressComponent.longName }}</span>
+        </dd>
+        <dt><span>Short Name</span></dt>
+        <dd>
+          <span>{{ addressComponent.shortName }}</span>
+        </dd>
+        <dt><span>Address</span></dt>
+        <dd>
+          <div *ngIf="addressComponent.address">
+            <a [routerLink]="['/google-address', addressComponent.address?.id, 'view']">{{ addressComponent.address?.id }}</a>
+          </div>
+        </dd>
+        <dt><span>Type</span></dt>
+        <dd>
+          <div *ngIf="addressComponent.type">
+            <a [routerLink]="['/address-type', addressComponent.type?.id, 'view']">{{ addressComponent.type?.id }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span>Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/address-component', addressComponent.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span>Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

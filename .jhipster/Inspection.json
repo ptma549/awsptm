@@ -1,0 +1,84 @@
+{
+  "name": "Inspection",
+  "fields": [
+    {
+      "fieldName": "priority",
+      "fieldType": "Priority",
+      "fieldValues": "P1_HIGH (High),P2_MEDIUM (Medium),P3_LOW (Low)"
+    },
+    {
+      "fieldName": "created",
+      "fieldType": "ZonedDateTime"
+    },
+    {
+      "fieldName": "occupiersName",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "occupiersHomePhone",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "occupiersWorkPhone",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "occupiersMobilePhone",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "work",
+      "fieldType": "byte[]",
+      "fieldTypeBlobContent": "text"
+    },
+    {
+      "fieldName": "accessInstructions",
+      "fieldType": "byte[]",
+      "fieldTypeBlobContent": "text"
+    },
+    {
+      "fieldName": "updated",
+      "fieldType": "ZonedDateTime"
+    },
+    {
+      "fieldName": "start",
+      "fieldType": "LocalDate",
+      "javadoc": "when Jobs should start being scheduled from"
+    },
+    {
+      "fieldName": "frequency",
+      "fieldType": "Duration",
+      "javadoc": "when period between inspections"
+    }
+  ],
+  "relationships": [
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "job",
+      "otherEntityRelationshipName": "inspection",
+      "relationshipName": "jobs"
+    },
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "clientUser",
+      "otherEntityRelationshipName": "inspections",
+      "relationshipName": "createdBy"
+    },
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "address",
+      "otherEntityRelationshipName": "inspections",
+      "relationshipName": "address"
+    }
+  ],
+  "entityTableName": "inspection",
+  "dto": "mapstruct",
+  "pagination": "pagination",
+  "service": "serviceClass",
+  "jpaMetamodelFiltering": true,
+  "fluentMethods": true,
+  "readOnly": false,
+  "embedded": false,
+  "applications": "*",
+  "changelogDate": "20220120151758"
+}

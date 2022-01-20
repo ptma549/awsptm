@@ -1,0 +1,104 @@
+<div>
+  <h2 id="page-heading" data-cy="GoogleAddressHeading">
+    <span>Google Addresses</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info mr-2" (click)="loadPage()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span>Refresh List</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-google-address"
+        [routerLink]="['/google-address/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span> Create a new Google Address </span>
+      </button>
+    </div>
+  </h2>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  <div class="alert alert-warning" id="no-result" *ngIf="googleAddresses?.length === 0">
+    <span>No googleAddresses found</span>
+  </div>
+
+  <div class="table-responsive" id="entities" *ngIf="googleAddresses && googleAddresses.length > 0">
+    <table class="table table-striped" aria-describedby="page-heading">
+      <thead>
+        <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="loadPage()">
+          <th scope="col" jhiSortBy="id"><span>ID</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="position"><span>Position</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="url"><span>Url</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="html"><span>Html</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="formatted"><span>Formatted</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="types"><span>Types</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let googleAddress of googleAddresses; trackBy: trackId" data-cy="entityTable">
+          <td>
+            <a [routerLink]="['/google-address', googleAddress.id, 'view']">{{ googleAddress.id }}</a>
+          </td>
+          <td>{{ googleAddress.position }}</td>
+          <td>{{ googleAddress.url }}</td>
+          <td>{{ googleAddress.html }}</td>
+          <td>{{ googleAddress.formatted }}</td>
+          <td>{{ googleAddress.types }}</td>
+          <td class="text-right">
+            <div class="btn-group">
+              <button
+                type="submit"
+                [routerLink]="['/google-address', googleAddress.id, 'view']"
+                class="btn btn-info btn-sm"
+                data-cy="entityDetailsButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span class="d-none d-md-inline">View</span>
+              </button>
+
+              <button
+                type="submit"
+                [routerLink]="['/google-address', googleAddress.id, 'edit']"
+                class="btn btn-primary btn-sm"
+                data-cy="entityEditButton"
+              >
+                <fa-icon icon="pencil-alt"></fa-icon>
+                <span class="d-none d-md-inline">Edit</span>
+              </button>
+
+              <button type="submit" (click)="delete(googleAddress)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                <fa-icon icon="times"></fa-icon>
+                <span class="d-none d-md-inline">Delete</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div *ngIf="googleAddresses && googleAddresses.length > 0">
+    <div class="row justify-content-center">
+      <jhi-item-count [params]="{ page: page, totalItems: totalItems, itemsPerPage: itemsPerPage }"></jhi-item-count>
+    </div>
+
+    <div class="row justify-content-center">
+      <ngb-pagination
+        [collectionSize]="totalItems"
+        [(page)]="ngbPaginationPage"
+        [pageSize]="itemsPerPage"
+        [maxSize]="5"
+        [rotate]="true"
+        [boundaryLinks]="true"
+        (pageChange)="loadPage($event)"
+      ></ngb-pagination>
+    </div>
+  </div>
+</div>

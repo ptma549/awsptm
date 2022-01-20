@@ -1,0 +1,51 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <div *ngIf="evidence">
+      <h2 data-cy="evidenceDetailsHeading"><span>Evidence</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span>ID</span></dt>
+        <dd>
+          <span>{{ evidence.id }}</span>
+        </dd>
+        <dt><span>Name</span></dt>
+        <dd>
+          <span>{{ evidence.name }}</span>
+        </dd>
+        <dt><span>Url</span></dt>
+        <dd>
+          <span>{{ evidence.url }}</span>
+        </dd>
+        <dt><span>Image</span></dt>
+        <dd>
+          <div *ngIf="evidence.image">
+            <a (click)="openFile(evidence.image, evidence.imageContentType)">
+              <img [src]="'data:' + evidence.imageContentType + ';base64,' + evidence.image" style="max-width: 100%" alt="evidence image" />
+            </a>
+            {{ evidence.imageContentType }}, {{ byteSize(evidence.image) }}
+          </div>
+        </dd>
+        <dt><span>Visit</span></dt>
+        <dd>
+          <div *ngIf="evidence.visit">
+            <a [routerLink]="['/visit', evidence.visit?.id, 'view']">{{ evidence.visit?.id }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span>Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/evidence', evidence.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span>Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

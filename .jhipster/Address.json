@@ -1,0 +1,67 @@
+{
+  "name": "Address",
+  "fields": [
+    {
+      "fieldName": "postcode",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "number",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "position",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "addressLine1",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "addressLine2",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "town",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "county",
+      "fieldType": "String"
+    }
+  ],
+  "relationships": [
+    {
+      "relationshipType": "one-to-one",
+      "otherEntityName": "googleAddress",
+      "otherEntityRelationshipName": "address",
+      "relationshipName": "googleAddress",
+      "ownerSide": true,
+      "useJPADerivedIdentifier": true,
+      "id": true
+    },
+    {
+      "relationshipType": "one-to-many",
+      "otherEntityName": "job",
+      "otherEntityRelationshipName": "address",
+      "relationshipName": "jobs"
+    },
+    {
+      "relationshipType": "one-to-many",
+      "otherEntityName": "inspection",
+      "otherEntityRelationshipName": "address",
+      "relationshipName": "inspections"
+    }
+  ],
+  "javadoc": "This represents how an address will be respresented internally.\\nIt will normally be created based upon the response from Google address lookup",
+  "entityTableName": "address",
+  "dto": "mapstruct",
+  "pagination": "pagination",
+  "service": "serviceClass",
+  "jpaMetamodelFiltering": true,
+  "fluentMethods": true,
+  "readOnly": false,
+  "embedded": false,
+  "applications": "*",
+  "changelogDate": "20220120151807"
+}

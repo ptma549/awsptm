@@ -1,0 +1,51 @@
+{
+  "name": "GoogleAddress",
+  "fields": [
+    {
+      "fieldName": "position",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "url",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "html",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "formatted",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "types",
+      "fieldType": "String"
+    }
+  ],
+  "relationships": [
+    {
+      "relationshipType": "one-to-many",
+      "otherEntityName": "addressComponent",
+      "otherEntityRelationshipName": "address",
+      "relationshipName": "addressComponents"
+    },
+    {
+      "relationshipType": "one-to-one",
+      "otherEntityName": "address",
+      "otherEntityRelationshipName": "googleAddress",
+      "relationshipName": "address",
+      "ownerSide": false
+    }
+  ],
+  "javadoc": "The response from Google",
+  "entityTableName": "google_address",
+  "dto": "mapstruct",
+  "pagination": "pagination",
+  "service": "serviceClass",
+  "jpaMetamodelFiltering": true,
+  "fluentMethods": true,
+  "readOnly": false,
+  "embedded": false,
+  "applications": "*",
+  "changelogDate": "20220120151808"
+}

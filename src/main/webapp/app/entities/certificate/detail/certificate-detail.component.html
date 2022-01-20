@@ -1,0 +1,51 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <div *ngIf="certificate">
+      <h2 data-cy="certificateDetailsHeading"><span>Certificate</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span>ID</span></dt>
+        <dd>
+          <span>{{ certificate.id }}</span>
+        </dd>
+        <dt><span>Name</span></dt>
+        <dd>
+          <span>{{ certificate.name }}</span>
+        </dd>
+        <dt><span>Image</span></dt>
+        <dd>
+          <div *ngIf="certificate.image">
+            <a (click)="openFile(certificate.image, certificate.imageContentType)">
+              <img
+                [src]="'data:' + certificate.imageContentType + ';base64,' + certificate.image"
+                style="max-width: 100%"
+                alt="certificate image"
+              />
+            </a>
+            {{ certificate.imageContentType }}, {{ byteSize(certificate.image) }}
+          </div>
+        </dd>
+        <dt><span>Visit</span></dt>
+        <dd>
+          <div *ngIf="certificate.visit">
+            <a [routerLink]="['/visit', certificate.visit?.id, 'view']">{{ certificate.visit?.id }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span>Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/certificate', certificate.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span>Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

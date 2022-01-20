@@ -1,0 +1,32 @@
+{
+  "name": "ClientOrganisation",
+  "fields": [
+    {
+      "fieldName": "name",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "domain",
+      "fieldType": "String"
+    }
+  ],
+  "relationships": [
+    {
+      "relationshipType": "one-to-many",
+      "otherEntityName": "clientUser",
+      "otherEntityRelationshipName": "client",
+      "relationshipName": "clientUsers"
+    }
+  ],
+  "javadoc": "Allows groups of users to be defined by organisation.",
+  "entityTableName": "client_organisation",
+  "dto": "mapstruct",
+  "pagination": "pagination",
+  "service": "serviceClass",
+  "jpaMetamodelFiltering": true,
+  "fluentMethods": true,
+  "readOnly": false,
+  "embedded": false,
+  "applications": "*",
+  "changelogDate": "20220120151805"
+}

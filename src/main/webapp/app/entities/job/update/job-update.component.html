@@ -1,0 +1,242 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2 id="jhi-job-heading" data-cy="JobCreateUpdateHeading">Create or edit a Job</h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        <div class="form-group" [hidden]="editForm.get('id')!.value == null">
+          <label class="form-control-label" for="field_id">ID</label>
+          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" for="field_priority">Priority</label>
+          <select class="form-control" name="priority" formControlName="priority" id="field_priority" data-cy="priority">
+            <option [ngValue]="null"></option>
+            <option *ngFor="let priority of priorityValues" [value]="priority">priority</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" for="field_created">Created</label>
+          <div class="d-flex">
+            <input
+              id="field_created"
+              data-cy="created"
+              type="datetime-local"
+              class="form-control"
+              name="created"
+              formControlName="created"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" for="field_occupiersName">Occupiers Name</label>
+          <input
+            type="text"
+            class="form-control"
+            name="occupiersName"
+            id="field_occupiersName"
+            data-cy="occupiersName"
+            formControlName="occupiersName"
+          />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" for="field_occupiersHomePhone">Occupiers Home Phone</label>
+          <input
+            type="text"
+            class="form-control"
+            name="occupiersHomePhone"
+            id="field_occupiersHomePhone"
+            data-cy="occupiersHomePhone"
+            formControlName="occupiersHomePhone"
+          />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" for="field_occupiersWorkPhone">Occupiers Work Phone</label>
+          <input
+            type="text"
+            class="form-control"
+            name="occupiersWorkPhone"
+            id="field_occupiersWorkPhone"
+            data-cy="occupiersWorkPhone"
+            formControlName="occupiersWorkPhone"
+          />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" for="field_occupiersMobilePhone">Occupiers Mobile Phone</label>
+          <input
+            type="text"
+            class="form-control"
+            name="occupiersMobilePhone"
+            id="field_occupiersMobilePhone"
+            data-cy="occupiersMobilePhone"
+            formControlName="occupiersMobilePhone"
+          />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" for="field_clientOrderId">Client Order Id</label>
+          <input
+            type="text"
+            class="form-control"
+            name="clientOrderId"
+            id="field_clientOrderId"
+            data-cy="clientOrderId"
+            formControlName="clientOrderId"
+          />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" for="field_assignedAt">Assigned At</label>
+          <div class="d-flex">
+            <input
+              id="field_assignedAt"
+              data-cy="assignedAt"
+              type="datetime-local"
+              class="form-control"
+              name="assignedAt"
+              formControlName="assignedAt"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" for="field_scheduled">Scheduled</label>
+          <div class="d-flex">
+            <input
+              id="field_scheduled"
+              data-cy="scheduled"
+              type="datetime-local"
+              class="form-control"
+              name="scheduled"
+              formControlName="scheduled"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" for="field_completed">Completed</label>
+          <div class="d-flex">
+            <input
+              id="field_completed"
+              data-cy="completed"
+              type="datetime-local"
+              class="form-control"
+              name="completed"
+              formControlName="completed"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" for="field_invoiceNumber">Invoice Number</label>
+          <input
+            type="text"
+            class="form-control"
+            name="invoiceNumber"
+            id="field_invoiceNumber"
+            data-cy="invoiceNumber"
+            formControlName="invoiceNumber"
+          />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" for="field_fault">Fault</label>
+          <textarea class="form-control" name="fault" id="field_fault" data-cy="fault" formControlName="fault"></textarea>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" for="field_accessInstructions">Access Instructions</label>
+          <textarea
+            class="form-control"
+            name="accessInstructions"
+            id="field_accessInstructions"
+            data-cy="accessInstructions"
+            formControlName="accessInstructions"
+          ></textarea>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" for="field_updated">Updated</label>
+          <div class="d-flex">
+            <input
+              id="field_updated"
+              data-cy="updated"
+              type="datetime-local"
+              class="form-control"
+              name="updated"
+              formControlName="updated"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" for="field_createdBy">Created By</label>
+          <select class="form-control" id="field_createdBy" data-cy="createdBy" name="createdBy" formControlName="createdBy">
+            <option [ngValue]="null"></option>
+            <option
+              [ngValue]="clientUserOption.id === editForm.get('createdBy')!.value?.id ? editForm.get('createdBy')!.value : clientUserOption"
+              *ngFor="let clientUserOption of clientUsersSharedCollection; trackBy: trackClientUserById"
+            >
+              {{ clientUserOption.id }}
+            </option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" for="field_assignedTo">Assigned To</label>
+          <select class="form-control" id="field_assignedTo" data-cy="assignedTo" name="assignedTo" formControlName="assignedTo">
+            <option [ngValue]="null"></option>
+            <option
+              [ngValue]="engineerOption.id === editForm.get('assignedTo')!.value?.id ? editForm.get('assignedTo')!.value : engineerOption"
+              *ngFor="let engineerOption of engineersSharedCollection; trackBy: trackEngineerById"
+            >
+              {{ engineerOption.id }}
+            </option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" for="field_address">Address</label>
+          <select class="form-control" id="field_address" data-cy="address" name="address" formControlName="address">
+            <option [ngValue]="null"></option>
+            <option
+              [ngValue]="addressOption.id === editForm.get('address')!.value?.id ? editForm.get('address')!.value : addressOption"
+              *ngFor="let addressOption of addressesSharedCollection; trackBy: trackAddressById"
+            >
+              {{ addressOption.id }}
+            </option>
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span>Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span>Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
