@@ -585,7 +585,7 @@
                             </platforms>
                         </from>
                         <to>
-                            <image>awsptm:latest</image>
+                            <image>ptma549/awsptm:latest</image>
                         </to>
                         <container>
                             <entrypoint>
